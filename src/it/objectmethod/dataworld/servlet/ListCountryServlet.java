@@ -28,16 +28,23 @@ public class ListCountryServlet extends HttpServlet {
     
     
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		List<Country> listCountry = null;
+		HttpSession session = req.getSession();
+		
+		//logica per session
 		String nameC = req.getParameter("name_cont");
-		List<Country> listCountry = new ArrayList<>();
+		if(nameC == null) {
+			nameC = (String) session.getAttribute("cont_visitato");
+		} else {
+			session.setAttribute("cont_visitato", nameC);
+		}
+		
 		ICountryDao countryDao = new CountryDao();
 		
 		listCountry = countryDao.getCountry(nameC);
 		
-		HttpSession session = req.getSession(true);
-		session.setAttribute("continent", nameC);
-		
 		req.setAttribute("countryList", listCountry);
+		
 		req.getRequestDispatcher("pages/show-country.jsp").forward(req, resp);
 	}
 }
