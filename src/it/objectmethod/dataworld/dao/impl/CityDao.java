@@ -11,13 +11,11 @@ import it.objectmethod.dataworld.config.ConnectionConfig;
 import it.objectmethod.dataworld.dao.ICityDao;
 import it.objectmethod.dataworld.model.City;
 
-public class CityDao implements ICityDao{
-
-	
+public class CityDao implements ICityDao {
 
 	@Override
 	public List<City> getCities(String contryCode) {
-		
+
 		City city = null;
 		Connection connCity = null;
 		PreparedStatement stmtCity = null;
@@ -31,18 +29,17 @@ public class CityDao implements ICityDao{
 			rs = stmtCity.executeQuery();
 			while (rs.next()) {
 				city = new City();
-				
+
 				city.setName(rs.getString("Name"));
 				city.setCountryCode(rs.getString("CountryCode"));
 				city.setPopulation(rs.getLong("Population"));
-				
-				listCity.add(city);
-				
-				}
 
-			
+				listCity.add(city);
+
+			}
+
 			System.out.println("city" + listCity);
-			
+
 			rs.close();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -50,28 +47,19 @@ public class CityDao implements ICityDao{
 			try {
 				if (stmtCity != null) {
 					stmtCity.close();
-				}			
+				}
 			} catch (SQLException se2) {
 			} // nothing we can do
 			try {
 				if (connCity != null) {
 					connCity.close();
-				}	
+				}
 			} catch (SQLException se) {
 				se.printStackTrace();
 			}
 		}
 
-		
-		
-		
-		
 		return listCity;
 	}
-
-	
-
-
-
 
 }

@@ -20,7 +20,7 @@ public class CountryDao implements ICountryDao {
 		PreparedStatement stmtTwo = null;
 		ResultSet rs = null;
 		List<Country> listCountry = new ArrayList<>();
-		
+
 		try {
 			connTwo = ConnectionConfig.getConnection();
 			String sqlQuery = "SELECT Name, Code FROM country where Continent = ?";
@@ -32,11 +32,8 @@ public class CountryDao implements ICountryDao {
 				country.setCode(rs.getString("Code"));
 				country.setName(rs.getString("Name"));
 				listCountry.add(country);
-				}
-			
-				
-			
-			
+			}
+
 			rs.close();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -44,13 +41,13 @@ public class CountryDao implements ICountryDao {
 			try {
 				if (stmtTwo != null) {
 					stmtTwo.close();
-				}			
+				}
 			} catch (SQLException se2) {
 			} // nothing we can do
 			try {
 				if (connTwo != null) {
 					connTwo.close();
-				}	
+				}
 			} catch (SQLException se) {
 				se.printStackTrace();
 			}
@@ -64,18 +61,18 @@ public class CountryDao implements ICountryDao {
 		Connection conn = null;
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
-		
+
 		List<String> listContinent = new ArrayList<>();
 		try {
 			conn = ConnectionConfig.getConnection();
 			String sql = "SELECT DISTINCT Continent FROM country;";
 			stmt = conn.prepareStatement(sql);
 			rs = stmt.executeQuery();
-			
+
 			while (rs.next()) {
 				listContinent.add(rs.getString("Continent"));
 			}
-			
+
 			rs.close();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -83,13 +80,13 @@ public class CountryDao implements ICountryDao {
 			try {
 				if (stmt != null) {
 					stmt.close();
-				}			
+				}
 			} catch (SQLException se2) {
 			} // nothing we can do
 			try {
 				if (conn != null) {
 					conn.close();
-				}	
+				}
 			} catch (SQLException se) {
 				se.printStackTrace();
 			}
@@ -97,7 +94,5 @@ public class CountryDao implements ICountryDao {
 
 		return listContinent;
 	}
-
-
 
 }
